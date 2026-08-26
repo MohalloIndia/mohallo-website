@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seller Dashboard — Mohallo</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <nav id="navbar" class="navbar-simple">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="images/mohallo-icon.png" alt="Mohallo logo" class="logo-mark-img" />
+        ohallo
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-text">Back to site</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LOGIN SCREEN -->
+  <section class="dash-login" id="dash-login">
+    <div class="dash-login-box">
+      <h2>Seller Dashboard</h2>
+      <p class="dash-sub">Enter the phone number and password you used to sign up.</p>
+      <div class="form-group">
+        <label for="login-phone">Phone Number</label>
+        <input type="tel" id="login-phone" placeholder="10-digit mobile number" />
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Your password" />
+      </div>
+      <span class="form-error" id="login-error"></span>
+      <button class="btn btn-primary btn-block" id="login-btn">Log In</button>
+    </div>
+  </section>
+
+  <!-- DASHBOARD SCREEN (hidden until login) -->
+  <section class="dash-main" id="dash-main">
+    <div class="section-container dash-container">
+
+      <div class="dash-header">
+        <div>
+          <p class="section-label">Welcome back</p>
+          <h2 class="section-title dash-title" id="dash-seller-name">Seller</h2>
+          <p class="dash-shop-info" id="dash-shop-info"></p>
+        </div>
+        <button class="btn btn-outline" id="logout-btn">Log out</button>
+      </div>
+
+      <div class="dash-add-box">
+        <h3>Add a New Product</h3>
+        <form id="product-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="product-name">Product Name</label>
+              <input type="text" id="product-name" placeholder="e.g. Homemade Chocolate Cake" required />
+            </div>
+            <div class="form-group">
+              <label for="product-price">Price (₹)</label>
+              <input type="text" id="product-price" placeholder="e.g. 450" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="product-desc">Description</label>
+            <input type="text" id="product-desc" placeholder="Short description of your product" />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+      </div>
+
+      <h3 class="dash-list-title">Your Products</h3>
+      <div class="dash-products-grid" id="products-grid">
+        <p class="dash-empty" id="dash-empty">No products yet — add your first one above.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

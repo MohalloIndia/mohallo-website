@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browse Local Shops — Mohallo</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <nav id="navbar" class="navbar-simple">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="images/mohallo-icon.png" alt="Mohallo logo" class="logo-mark-img" />
+        ohallo
+      </a>
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-text">Seller Login</a>
+        <a href="index.html" class="btn btn-primary">Back to site</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="market-header">
+    <div class="section-container market-header-inner">
+      <span class="section-label">Marketplace</span>
+      <h2 class="section-title">Discover what your neighbours are selling</h2>
+      <p class="section-sub">Browse real products from real local sellers on Mohallo.</p>
+
+      <div class="market-search">
+        <input type="text" id="search-input" placeholder="Search products (e.g. cake, tuition, plumber)..." />
+      </div>
+    </div>
+  </section>
+
+  <section class="market-results">
+    <div class="section-container market-results-inner">
+      <p class="market-count" id="market-count">Loading products...</p>
+      <div class="market-grid" id="market-grid"></div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+  <script src="marketplace.js"></script>
+</body>
+</html>

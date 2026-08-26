@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mohallo — Your New Digital Local Shop</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div id="loader">
+    <div class="symbol-ring">
+      <span>π</span>
+      <span>∞</span>
+      <span>√</span>
+      <span>Σ</span>
+      <span>Δ</span>
+      <span>∫</span>
+    </div>
+    <p class="loader-text">mohallo</p>
+  </div>
+
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <img src="images/mohallo-icon.png" alt="Mohallo logo" class="logo-mark-img" />
+        ohallo
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#plans">Plans</a></li>
+        <li><a href="#delivery">Delivery</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-text">Login</a>
+        <button class="btn btn-primary" onclick="openSignupModal()">Start Selling</button>
+      </div>
+
+      <button id="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <ul class="mobile-menu" id="mobile-menu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#plans">Plans</a></li>
+    <li><a href="#delivery">Delivery</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="dashboard.html" class="btn btn-text">Login</a></li>
+    <li><button class="btn btn-primary" onclick="openSignupModal()">Start Selling</button></li>
+  </ul>
+
+  <section class="hero" id="home">
+    <div class="hero-container">
+      <div class="hero-text">
+        <span class="hero-badge">🧡 Now live in your neighbourhood</span>
+        <h1>It's your new <span class="highlight">digital local shop</span>.</h1>
+        <p class="hero-sub">
+          A place where anyone can sell their items without paying too much rent.
+          Real people. Real connections. Real local growth.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" onclick="openSignupModal()">Start Selling</button>
+                    <a href="marketplace.html" class="btn btn-outline btn-lg">Explore Mohallo</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="shop-card shop-card-main">
+          <div class="shop-icon">🏠</div>
+          <p class="shop-card-title">Your Shop</p>
+          <p class="shop-card-sub">Open 24/7 · Local</p>
+        </div>
+
+        <div class="shop-card shop-card-float shop-card-1">
+          <span class="dot dot-green"></span>
+          <p>New order received</p>
+        </div>
+
+        <div class="shop-card shop-card-float shop-card-2">
+          <span class="dot dot-orange"></span>
+          <p>5 products listed</p>
+        </div>
+
+        <div class="blob"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how-it-works">
+    <div class="section-container">
+      <span class="section-label">How It Works</span>
+      <h2 class="section-title">From idea to your first sale</h2>
+      <p class="section-sub">Five simple steps to bring your shop online with Mohallo.</p>
+
+      <div class="steps-grid">
+        <div class="step-card reveal">
+          <div class="step-number">01</div>
+          <h3>Create your shop</h3>
+          <p>Set up your own section on Mohallo in minutes — no technical skills needed.</p>
+        </div>
+
+        <div class="step-card reveal">
+          <div class="step-number">02</div>
+          <h3>List your products</h3>
+          <p>Add photos, prices and descriptions for whatever you're selling.</p>
+        </div>
+
+        <div class="step-card reveal">
+          <div class="step-number">03</div>
+          <h3>Customers discover you</h3>
+          <p>People nearby browse and find your shop right in their own mohalla.</p>
+        </div>
+
+        <div class="step-card reveal">
+          <div class="step-number">04</div>
+          <h3>Receive orders</h3>
+          <p>Get notified instantly when someone wants to buy from you.</p>
+        </div>
+
+        <div class="step-card reveal">
+          <div class="step-number">05</div>
+          <h3>Mohallo helps deliver</h3>
+          <p>If your buyer pays for delivery, we help get it to their door.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="plans" id="plans">
+    <div class="section-container">
+      <span class="section-label">Plans</span>
+      <h2 class="section-title">Start small. Grow big.</h2>
+      <p class="section-sub">Pick the plan that fits where you are today.</p>
+
+      <div class="plans-grid">
+        <div class="plan-card reveal">
+          <p class="plan-name">Starter</p>
+          <div class="plan-price">
+            <span class="price-amount">₹300</span>
+            <span class="price-period">/month</span>
+          </div>
+          <ul class="plan-features">
+            <li>Your own section on Mohallo</li>
+            <li>Product listings</li>
+            <li>Local visibility</li>
+            <li>Affordable entry for new sellers</li>
+            <li>Simple setup</li>
+          </ul>
+          <button class="btn btn-outline btn-block" onclick="openSignupModal('300')">Start with ₹300</button>
+        </div>
+
+        <div class="plan-card plan-highlight reveal">
+          <span class="plan-badge">Recommended</span>
+          <p class="plan-name">Growth</p>
+          <div class="plan-price">
+            <span class="price-amount">₹1000</span>
+            <span class="price-period">/month</span>
+          </div>
+          <ul class="plan-features">
+            <li>Everything in the ₹300 plan</li>
+            <li>More visibility</li>
+            <li>Promotional opportunities</li>
+            <li>Free advertisements/exposure</li>
+            <li>Better reach</li>
+            <li>More opportunities to attract customers</li>
+          </ul>
+          <button class="btn btn-primary btn-block" onclick="openSignupModal('1000')">Choose ₹1000</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="delivery" id="delivery">
+    <div class="section-container delivery-container">
+      <div class="delivery-text reveal">
+        <span class="section-label">Delivery</span>
+        <h2 class="section-title delivery-title">We Deliver Smiles! 🧡</h2>
+        <p class="delivery-desc">
+          If a buyer pays extra for delivery, Mohallo can provide the delivery
+          service to get it to their door.
+        </p>
+        <p class="delivery-highlight">
+          You focus on your business. We help handle the delivery.
+        </p>
+
+        <div class="delivery-tags">
+          <span class="tag">🛡️ Safe &amp; Reliable</span>
+          <span class="tag">🛵 Hassle-free Service</span>
+          <span class="tag">📦 Delivered with Care</span>
+        </div>
+      </div>
+
+      <div class="delivery-visual reveal">
+        <div class="delivery-circle">
+          <div class="scooter">🛵</div>
+          <div class="delivery-path"></div>
+          <div class="delivery-pin pin-start">🏠</div>
+          <div class="delivery-pin pin-end">📍</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why" id="why">
+    <div class="section-container">
+      <span class="section-label">Why Mohallo</span>
+      <h2 class="section-title">Built for local sellers like you</h2>
+      <p class="section-sub">Everything about Mohallo is designed around one goal — helping you grow.</p>
+
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="why-icon">💰</div>
+          <h3>Affordable</h3>
+          <p>No expensive traditional shop rent.</p>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="why-icon">📱</div>
+          <h3>Easy to Use</h3>
+          <p>Simple way to list and sell products.</p>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="why-icon">📣</div>
+          <h3>More Exposure</h3>
+          <p>Additional opportunities for sellers to reach customers.</p>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="why-icon">🚚</div>
+          <h3>Delivery Made Easy</h3>
+          <p>Mohallo can help coordinate delivery.</p>
+        </div>
+
+        <div class="why-card reveal">
+          <div class="why-icon">🤝</div>
+          <h3>Stronger Together</h3>
+          <p>Be part of a trusted local community.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="community" id="community">
+    <div class="community-container reveal">
+      <div class="community-avatars">
+        <div class="avatar avatar-1">🧕</div>
+        <div class="avatar avatar-2">👨</div>
+        <div class="avatar avatar-3">👩</div>
+        <div class="avatar avatar-4">👴</div>
+        <div class="community-heart">🧡</div>
+      </div>
+
+      <h2 class="community-title">
+        This is not just a marketplace.<br />
+        <span class="highlight">It's a community that grows together.</span>
+      </h2>
+
+      <p class="community-sub">
+        Real people. Real connections. Real local growth.
+      </p>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="section-container about-container">
+      <div class="about-text reveal">
+        <span class="section-label">About Mohallo</span>
+        <h2 class="section-title about-title">Every neighbourhood has something worth discovering.</h2>
+        <p class="about-desc">
+          Every neighbourhood has talented people, small businesses and useful
+          products. Mohallo exists to bring them into the digital world —
+          giving local sellers and communities a simple, affordable way to
+          participate in digital commerce.
+        </p>
+
+        <div class="about-stats">
+          <div class="about-stat">
+            <p class="stat-number">₹300</p>
+            <p class="stat-label">Starting price</p>
+          </div>
+          <div class="about-stat">
+            <p class="stat-number">100%</p>
+            <p class="stat-label">Local focus</p>
+          </div>
+          <div class="about-stat">
+            <p class="stat-number">1</p>
+            <p class="stat-label">Community, growing together</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="final-cta-container reveal">
+      <h2 class="final-cta-title">Your shop. Your way. Your success.</h2>
+      <p class="final-cta-sub">Sell with Heart. Connect with People. Grow with Mohallo. 🧡</p>
+      <button class="btn btn-primary btn-lg" onclick="openSignupModal()">Start Selling With Mohallo</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo footer-logo">
+            <img src="images/mohallo-icon.png" alt="Mohallo logo" class="logo-mark-img" />
+            ohallo
+          </a>
+          <p class="footer-desc">
+            Your new digital local shop. Real people. Real connections. Real
+            local growth.
+          </p>
+
+          <div class="footer-socials">
+            <a href="#" class="social-icon" aria-label="Instagram">📷</a>
+            <a href="#" class="social-icon" aria-label="Facebook">📘</a>
+            <a href="#" class="social-icon" aria-label="WhatsApp">💬</a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <p class="footer-heading">Explore</p>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#plans">Plans</a>
+          <a href="#about">About</a>
+        </div>
+
+        <div class="footer-links">
+          <p class="footer-heading">Contact</p>
+          <a href="#">Get in touch</a>
+          <a href="#">Support</a>
+        </div>
+
+        <div class="footer-links">
+          <p class="footer-heading">Legal</p>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> Mohallo. All rights reserved.</p>
+        <p class="footer-tagline">Sell with Heart. Connect with People. Grow with Mohallo.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Signup Modal -->
+  <div class="modal-overlay" id="signup-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeSignupModal()" aria-label="Close">&times;</button>
+
+      <h3 class="modal-title">Start Selling on Mohallo</h3>
+      <p class="modal-sub">Tell us a bit about your shop and we'll get you started.</p>
+
+      <form id="signup-form" novalidate>
+        <div class="form-group">
+          <label for="seller-name">Your Name</label>
+          <input type="text" id="seller-name" name="seller-name" placeholder="e.g. Priya Sharma" required />
+          <span class="form-error" id="error-name"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="seller-phone">Phone Number</label>
+          <input type="tel" id="seller-phone" name="seller-phone" placeholder="10-digit mobile number" required />
+          <span class="form-error" id="error-phone"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="shop-name">Shop / Product Type</label>
+          <input type="text" id="shop-name" name="shop-name" placeholder="e.g. Priya's Home Bakery" required />
+          <span class="form-error" id="error-shop"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="seller-password">Create a Password</label>
+          <input type="password" id="seller-password" name="seller-password" placeholder="At least 6 characters" required minlength="6" />
+          <span class="form-error" id="error-password"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="seller-plan">Plan</label>
+          <select id="seller-plan" name="seller-plan">
+            <option value="300">₹300/month — Starter</option>
+            <option value="1000">₹1000/month — Growth</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </form>
+
+      <div class="modal-success" id="modal-success">
+        <div class="success-icon">✅</div>
+        <h3>You're on the list!</h3>
+        <p>Thanks for your interest in Mohallo. We'll reach out to you shortly to set up your shop.</p>
+        <button class="btn btn-outline btn-block" onclick="closeSignupModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ <script src="script.js"></script>
+</body>
+</html>
