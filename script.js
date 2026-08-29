@@ -7,14 +7,13 @@ console.log("Mohallo script connected successfully ✅");
 
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
-  if (!loader) return; // this page (e.g. dashboard.html) has no loader
+  if (!loader) return;
 
   setTimeout(() => {
     loader.classList.add("hidden");
-  }, 1200); // keep the loader visible for 1.2 seconds minimum
+  }, 1200);
 });
 
-// Navbar scroll effect
 const navbar = document.getElementById("navbar");
 
 if (navbar) {
@@ -27,7 +26,6 @@ if (navbar) {
   });
 }
 
-// Mobile menu toggle
 const menuToggle = document.getElementById("menu-toggle");
 const mobileMenu = document.getElementById("mobile-menu");
 
@@ -37,7 +35,6 @@ if (menuToggle && mobileMenu) {
     mobileMenu.classList.toggle("active");
   });
 
-  // Close mobile menu when a link is clicked
   document.querySelectorAll(".mobile-menu a").forEach((link) => {
     link.addEventListener("click", () => {
       menuToggle.classList.remove("active");
@@ -46,7 +43,6 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-// Scroll reveal animation
 const revealElements = document.querySelectorAll(".reveal");
 
 const revealObserver = new IntersectionObserver(
@@ -62,13 +58,11 @@ const revealObserver = new IntersectionObserver(
 
 revealElements.forEach((el) => revealObserver.observe(el));
 
-// Auto-update footer year (only on pages that have a footer)
 const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
 }
 
-// Count-up animation for About section stats
 const statNumbers = document.querySelectorAll(".stat-number");
 
 const countUpObserver = new IntersectionObserver(
@@ -106,7 +100,7 @@ const countUpObserver = new IntersectionObserver(
 
 statNumbers.forEach((el) => countUpObserver.observe(el));
 
-// ===== SIGNUP MODAL LOGIC ===== (only runs on pages that have the modal)
+// ===== SIGNUP MODAL + MEMBERSHIP PAYMENT ===== (only runs on pages that have the modal)
 
 const signupModal = document.getElementById("signup-modal");
 const signupForm = document.getElementById("signup-form");
@@ -116,7 +110,7 @@ const planSelect = document.getElementById("seller-plan");
 function openSignupModal(plan) {
   if (!signupModal) return;
   signupModal.classList.add("active");
-  document.body.style.overflow = "hidden"; // prevent background scroll
+  document.body.style.overflow = "hidden";
 
   if (plan) {
     planSelect.value = plan;
@@ -128,7 +122,6 @@ function closeSignupModal() {
   signupModal.classList.remove("active");
   document.body.style.overflow = "";
 
-  // Reset form back to its default state for next time it's opened
   signupForm.reset();
   signupForm.style.display = "block";
   modalSuccess.classList.remove("active");
@@ -146,7 +139,6 @@ function showError(inputId, errorId, message) {
 }
 
 if (signupModal && signupForm) {
-  // Close modal when clicking the dark overlay (but not the box itself)
   signupModal.addEventListener("click", (e) => {
     if (e.target === signupModal) {
       closeSignupModal();
@@ -188,14 +180,10 @@ if (signupModal && signupForm) {
 
     if (!isValid) return;
 
-    // Disable the button while saving, so people can't double-submit
     const submitBtn = signupForm.querySelector("button[type='submit']");
     submitBtn.disabled = true;
-    submitBtn.textContent = "Submitting...";
+    submitBtn.textContent = "Creating account...";
 
-    // Create a real secure login account. The seller's shop row (name, phone,
-    // shop_name, plan) is created automatically by a database trigger using
-    // this metadata - see the on_auth_user_created trigger in Supabase.
     const { data: authData, error: authError } = await supabaseClient.auth.signUp({
       email: phone + "@mohalloseller.app",
       password: password,
@@ -218,8 +206,70 @@ if (signupModal && signupForm) {
       return;
     }
 
-    // Success - the trigger has created the seller row automatically
+    // Account created - now collect the membership payment
     signupForm.style.display = "none";
-    modalSuccess.classList.add("active");
+    launchMembershipPayment(plan, phone, shop, authData.user.id);
   });
+}
+
+async function launchMembershipPayment(plan, phone, shop, userId) {
+  const amountInRupees = plan === "1000" ? 1000 : 300;
+
+  const orderRes = await fetch("/.netlify/functions/create-order", {
+    method: "POST",
+    body: JSON.stringify({
+      amount: amountInRupees * 100,
+      receipt: "membership_" + phone,
+    }),
+  });
+  const order = await orderRes.json();
+
+  if (!order.order_id) {
+    showError("shop-name", "error-shop", "Could not start payment. Please try again.");
+    signupForm.style.display = "block";
+    return;
+  }
+
+  const options = {
+    key: "rzp_test_TVElHzGAS60nJc",
+    amount: order.amount,
+    currency: order.currency,
+    order_id: order.order_id,
+    name: "Mohallo",
+    description: "₹" + amountInRupees + "/month - " + shop,
+    handler: async function (response) {
+      const verifyRes = await fetch("/.netlify/functions/verify-payment", {
+        method: "POST",
+        body: JSON.stringify({
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_signature: response.razorpay_signature,
+        }),
+      });
+      const result = await verifyRes.json();
+
+      if (result.verified) {
+        await supabaseClient
+          .from("sellers")
+          .update({ payment_status: "paid" })
+          .eq("user_id", userId);
+
+        modalSuccess.classList.add("active");
+      } else {
+        showError("shop-name", "error-shop", "Payment could not be verified. Please contact support.");
+        signupForm.style.display = "block";
+      }
+    },
+    prefill: { contact: phone },
+    theme: { color: "#E8622C" },
+    modal: {
+      ondismiss: function () {
+        showError("shop-name", "error-shop", "Payment was not completed. You can try again from your dashboard.");
+        signupForm.style.display = "block";
+      },
+    },
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
 }

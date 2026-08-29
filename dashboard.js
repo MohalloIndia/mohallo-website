@@ -11,6 +11,8 @@ const logoutBtn = document.getElementById("logout-btn");
 const productForm = document.getElementById("product-form");
 const productsGrid = document.getElementById("products-grid");
 const dashEmpty = document.getElementById("dash-empty");
+const ordersList = document.getElementById("orders-list");
+const ordersEmpty = document.getElementById("orders-empty");
 
 // Hide dashboard by default until login succeeds
 dashMain.style.display = "none";
@@ -67,6 +69,7 @@ function showDashboard() {
     currentSeller.shop_name + " · ₹" + currentSeller.plan + "/month plan";
 
   loadProducts();
+  loadOrders();
 }
 
 logoutBtn.addEventListener("click", async () => {
@@ -112,7 +115,6 @@ function renderProducts(products) {
     productsGrid.appendChild(card);
   });
 
-  // Wire up delete buttons
   document.querySelectorAll(".product-delete").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const id = btn.getAttribute("data-id");
@@ -127,7 +129,45 @@ function renderProducts(products) {
   });
 }
 
-// Basic escaping so product text can't break the page's HTML
+async function loadOrders() {
+  const { data, error } = await supabaseClient
+    .from("orders")
+    .select("*, products(product_name)")
+    .eq("seller_id", currentSeller.id)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Orders load error:", error);
+    return;
+  }
+
+  renderOrders(data);
+}
+
+function renderOrders(orders) {
+  ordersList.innerHTML = "";
+
+  if (!orders || orders.length === 0) {
+    ordersList.appendChild(ordersEmpty);
+    return;
+  }
+
+  orders.forEach((order) => {
+    const productName = order.products ? order.products.product_name : "Product";
+    const row = document.createElement("div");
+    row.className = "order-card";
+    row.innerHTML = `
+      <div class="order-main">
+        <h4>${escapeHtml(productName)}</h4>
+        <p class="order-buyer">${escapeHtml(order.buyer_name)} · ${escapeHtml(order.buyer_phone)}</p>
+        ${order.buyer_address ? `<p class="order-address">📍 ${escapeHtml(order.buyer_address)}</p>` : ""}
+      </div>
+      <div class="order-amount">₹${escapeHtml(order.amount)}</div>
+    `;
+    ordersList.appendChild(row);
+  });
+}
+
 function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = str;
