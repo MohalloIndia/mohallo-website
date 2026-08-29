@@ -385,6 +385,34 @@
           <span class="form-error" id="error-shop"></span>
         </div>
 
+        <div id="seller-bank-fields">
+          <div class="form-group">
+            <label for="seller-account-name">Bank Account Holder Name</label>
+            <input type="text" id="seller-account-name" placeholder="Name as per bank account" required />
+            <span class="form-error" id="error-account-name"></span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="seller-account-number">Bank Account Number</label>
+              <input type="password" id="seller-account-number" placeholder="Bank account number" required />
+              <span class="form-error" id="error-account-number"></span>
+            </div>
+            <div class="form-group">
+              <label for="seller-ifsc">IFSC Code</label>
+              <input type="text" id="seller-ifsc" placeholder="e.g. SBIN0000000" required />
+              <span class="form-error" id="error-ifsc"></span>
+            </div>
+          </div>
+        </div>
+
+        <div id="seller-shop-fields">
+          <div class="form-group">
+            <label for="seller-address">Shop / Business Address</label>
+            <input type="text" id="seller-address" placeholder="Full address" required />
+            <span class="form-error" id="error-address"></span>
+          </div>
+        </div>
+
         <div class="form-group">
           <label for="seller-password">Create a Password</label>
           <input type="password" id="seller-password" name="seller-password" placeholder="At least 6 characters" required minlength="6" />
@@ -399,13 +427,13 @@
           </select>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        <button type="submit" class="btn btn-primary btn-block">Continue to payment</button>
       </form>
 
       <div class="modal-success" id="modal-success">
         <div class="success-icon">✅</div>
         <h3>You're on the list!</h3>
-        <p>Thanks for your interest in Mohallo. We'll reach out to you shortly to set up your shop.</p>
+        <p>Your seller account is created and your monthly membership payment is verified. Your shop can now be managed from the Seller Dashboard.</p>
         <button class="btn btn-outline btn-block" onclick="closeSignupModal()">Close</button>
       </div>
     </div>
