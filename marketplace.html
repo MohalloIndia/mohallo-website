@@ -9,78 +9,13 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
+  <nav id="navbar" class="navbar-simple"><div class="nav-container"><a href="index.html" class="logo"><img src="images/mohallo-icon.png" alt="Mohallo logo" class="logo-mark-img" />ohallo</a><div class="nav-actions"><a href="dashboard.html" class="btn btn-text">Seller Login</a><a href="index.html" class="btn btn-primary">Back to site</a></div></div></nav>
+  <section class="market-header"><div class="section-container market-header-inner"><span class="section-label">Marketplace</span><h2 class="section-title">Discover local shops around you</h2><p class="section-sub">Browse shops first, then choose products from the seller you want to buy from.</p><div class="market-search"><input type="text" id="search-input" placeholder="Search shops or products..." /></div></div></section>
+  <section class="market-results"><div class="section-container market-results-inner"><p class="market-count" id="market-count">Loading shops...</p><div class="market-grid" id="market-grid"></div></div></section>
 
-  <nav id="navbar" class="navbar-simple">
-    <div class="nav-container">
-      <a href="index.html" class="logo">
-        <img src="images/mohallo-icon.png" alt="Mohallo logo" class="logo-mark-img" />
-        ohallo
-      </a>
-      <div class="nav-actions">
-        <a href="dashboard.html" class="btn btn-text">Seller Login</a>
-        <a href="index.html" class="btn btn-primary">Back to site</a>
-      </div>
-    </div>
-  </nav>
+  <div class="modal-overlay" id="shop-modal"><div class="modal-box"><button class="modal-close" id="shop-close" aria-label="Close">&times;</button><h3 class="modal-title" id="shop-title">Shop</h3><p class="modal-sub" id="shop-subtitle"></p><div id="shop-products"></div><button class="btn btn-primary btn-block" id="open-cart-btn">View Cart</button></div></div>
 
-  <section class="market-header">
-    <div class="section-container market-header-inner">
-      <span class="section-label">Marketplace</span>
-      <h2 class="section-title">Discover what your neighbours are selling</h2>
-      <p class="section-sub">Browse real products from real local sellers on Mohallo.</p>
+  <div class="modal-overlay" id="cart-modal"><div class="modal-box"><button class="modal-close" id="cart-close" aria-label="Close">&times;</button><h3 class="modal-title">Your Cart</h3><div id="cart-items"></div><p class="modal-sub" id="cart-total">Total: ₹0</p><form id="buy-form" novalidate><div class="form-group"><label for="buyer-name">Your Name</label><input type="text" id="buyer-name" placeholder="e.g. Rohit Kumar" required /><span class="form-error" id="error-buyer-name"></span></div><div class="form-group"><label for="buyer-phone">Phone Number</label><input type="tel" id="buyer-phone" placeholder="10-digit mobile number" required /><span class="form-error" id="error-buyer-phone"></span></div><div class="form-group"><label for="buyer-address">Delivery Address</label><input type="text" id="buyer-address" placeholder="Enter delivery address" required /><span class="form-error" id="error-buyer-address"></span></div><button type="submit" class="btn btn-primary btn-block">Pay &amp; Buy</button></form><div class="modal-success" id="buy-success"><div class="success-icon">✅</div><h3>Order placed!</h3><p>Payment verified and your order has been sent to the seller.</p><button class="btn btn-outline btn-block" id="success-close">Close</button></div></div></div>
 
-      <div class="market-search">
-        <input type="text" id="search-input" placeholder="Search products (e.g. cake, tuition, plumber)..." />
-      </div>
-    </div>
-  </section>
-
-  <section class="market-results">
-    <div class="section-container market-results-inner">
-      <p class="market-count" id="market-count">Loading products...</p>
-      <div class="market-grid" id="market-grid"></div>
-    </div>
-  </section>
-
-  <!-- Buy Modal -->
-  <div class="modal-overlay" id="buy-modal">
-    <div class="modal-box">
-      <button class="modal-close" onclick="closeBuyModal()" aria-label="Close">&times;</button>
-
-      <h3 class="modal-title" id="buy-product-name">Buy Product</h3>
-      <p class="modal-sub" id="buy-product-price">₹0</p>
-
-      <form id="buy-form" novalidate>
-        <div class="form-group">
-          <label for="buyer-name">Your Name</label>
-          <input type="text" id="buyer-name" placeholder="e.g. Rohit Kumar" required />
-          <span class="form-error" id="error-buyer-name"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="buyer-phone">Phone Number</label>
-          <input type="tel" id="buyer-phone" placeholder="10-digit mobile number" required />
-          <span class="form-error" id="error-buyer-phone"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="buyer-address">Delivery Address (optional)</label>
-          <input type="text" id="buyer-address" placeholder="Only if you want it delivered" />
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block">Pay &amp; Buy</button>
-      </form>
-
-      <div class="modal-success" id="buy-success">
-        <div class="success-icon">✅</div>
-        <h3>Order placed!</h3>
-        <p>The seller has been notified. They'll reach out to you directly about delivery or pickup.</p>
-        <button class="btn btn-outline btn-block" onclick="closeBuyModal()">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-  <script src="marketplace.js"></script>
-</body>
-</html>
+  <script src="script.js"></script><script src="marketplace.js"></script>
+</body></html>
